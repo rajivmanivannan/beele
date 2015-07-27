@@ -22,8 +22,7 @@ onCharacteristicChanged
 
 This callback is called when you are trying to send data using writeCharacteristic(characteristics) and the BLE device responds with some value.
 
-Usually a BLE device has few characteristics, to make it simple, I name a few characteristics
+BLE device has few characteristics like
 
-WRITE - write Characteristics
-READ - read Characteristics
-To make it clear, when you send data, you will need to use WRITE characteristics and then when the BLE device responds Android app will call READ characteristics
+1. WRITE - write Characteristics : When you send data, you will need to use WRITE characteristics.
+2. READ - read Characteristics : To read the data from the BLE device we have call the corresponding READ characteristics.
