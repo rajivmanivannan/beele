@@ -26,3 +26,5 @@ BLE device has few characteristics like
 
 1. WRITE - write Characteristics : When you send data, you will need to use WRITE characteristics.
 2. READ - read Characteristics : To read the data from the BLE device we have call the corresponding READ characteristics.
+
+Refer the following link for more detail: https://developer.android.com/intl/ko/reference/android/bluetooth/BluetoothGattCallback.html
