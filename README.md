@@ -1,6 +1,5 @@
 # BeeLe
-BeeLe is an Android Library project for Bluetooth Low Energy communication.We have addressed concurent write charasteristic failure issue
-and added work around for it.
+BeeLe is an Android Library project for Bluetooth Low Energy communication.We have addressed the simultaneous write charasteristic failure issue and added work around for it.
 
 Note: Read the below description of Android's BluetoothGattCallback class Key methods for better understanding before use this library.
 
