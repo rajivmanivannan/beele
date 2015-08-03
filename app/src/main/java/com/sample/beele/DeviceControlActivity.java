@@ -1,6 +1,7 @@
 package com.sample.beele;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import com.beele.BluetoothLe;
 import com.beele.BluetoothLe.BluetoothLeListener;
 
-public class DeviceControlActivity extends Activity {
+public class DeviceControlActivity extends Activity implements BluetoothLeListener {
     //Constants
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
@@ -31,71 +32,7 @@ public class DeviceControlActivity extends Activity {
     private BluetoothLe mBluetoothLe;
     private BluetoothManager mBluetoothManager = null;
     private BluetoothGatt mBluetoothGatt = null;
-
-
-    private BluetoothLeListener mBluetoothLeListener = new BluetoothLeListener() {
-
-        @Override
-        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onConnectionStateChange(BluetoothGatt gatt, int status,
-                                            int newState) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onCharacteristicChanged(BluetoothGatt gatt,
-                                            BluetoothGattCharacteristic characteristic) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onCharacteristicRead(BluetoothGatt gatt,
-                                         BluetoothGattCharacteristic characteristic, int status) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onCharacteristicWrite(BluetoothGatt gatt,
-                                          BluetoothGattCharacteristic characteristic, int status) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onDescriptorRead(BluetoothGatt gatt,
-                                     BluetoothGattDescriptor descriptor, int status) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onDescriptorWrite(BluetoothGatt gatt,
-                                      BluetoothGattDescriptor descriptor, int status) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onError(String errorMessage) {
-            // TODO Auto-generated method stub
-
-        }
-
-    };
+    private BluetoothDevice mBluetoothDevice;
 
 
     @Override
@@ -107,9 +44,6 @@ public class DeviceControlActivity extends Activity {
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         Log.i("mDeviceAddress", mDeviceAddress);
-        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        mBluetoothLe = new BluetoothLe(this, mBluetoothManager, mBluetoothLeListener);
-        mBluetoothGatt = mBluetoothLe.connect(mBluetoothManager.getAdapter().getRemoteDevice(mDeviceAddress), false);
         // Sets up UI references.
         ((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
         mConnectionState = (TextView) findViewById(R.id.connection_state);
@@ -117,16 +51,14 @@ public class DeviceControlActivity extends Activity {
         getActionBar().setTitle(mDeviceName);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        init();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+    private void init(){
+        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothDevice = mBluetoothManager.getAdapter().getRemoteDevice(mDeviceAddress);
+        mBluetoothLe = new BluetoothLe(this, mBluetoothManager, this);
+        mBluetoothGatt = mBluetoothLe.connect(mBluetoothDevice, false);
     }
 
     @Override
@@ -163,17 +95,61 @@ public class DeviceControlActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-	/*
-     * private void clearUI() { mDataField.setText(""); }
-	 * 
-	 * private void updateConnectionState(final int resourceId) {
-	 * runOnUiThread(new Runnable() {
-	 * 
-	 * @Override public void run() { mConnectionState.setText(resourceId); } });
-	 * }
-	 * 
-	 * private void displayData(String data) { if (data != null) {
-	 * mDataField.append(data +"\n"); } }
-	 */
+    @Override
+    public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+
+    }
+
+    @Override
+    public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
+
+    }
+
+    @Override
+    public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+
+    }
+
+    @Override
+    public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+
+    }
+
+    @Override
+    public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+
+    }
+
+    @Override
+    public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+
+    }
+
+    @Override
+    public void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+
+    }
+
+    @Override
+    public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+
+        Log.i("errorMessage",errorMessage);
+    }
+
+   /*   private void clearUI() { mDataField.setText(""); }
+
+	  private void updateConnectionState(final int resourceId) {
+	  runOnUiThread(new Runnable() {
+
+	  @Override public void run() { mConnectionState.setText(resourceId); } });
+	  }
+
+	  private void displayData(String data) { if (data != null) {
+	 mDataField.append(data +"\n"); } }*/
 
 }

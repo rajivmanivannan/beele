@@ -23,7 +23,8 @@ public class BluetoothLe {
 
     private static UUID CLIENT_CHARACTERISTIC_CONFIG = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
     private ProcessQueueExecutor processQueueExecutor = new ProcessQueueExecutor();
-    private HashMap<String, BluetoothGatt> bluetoothGattHashMap;
+    // To add and maintain the BluetoothGatt object of each BLE device.
+    private HashMap<String, BluetoothGatt> bluetoothGattHashMap = new HashMap<>();
     private BluetoothLeListener mBluetoothLeListener;
     private BluetoothManager mBluetoothManager;
     private Context context;
@@ -75,15 +76,13 @@ public class BluetoothLe {
     };
 
     public BluetoothLe(Context context, BluetoothManager mBluetoothManager, BluetoothLeListener callback) {
+        mBluetoothLeListener = callback;
         this.mBluetoothManager = mBluetoothManager;
         this.context = context;
 
         if (!processQueueExecutor.isAlive()) {
             processQueueExecutor.start();
         }
-        // To add and maintain the BluetoothGatt object of each BLE device.
-        bluetoothGattHashMap = new HashMap<String, BluetoothGatt>();
-        mBluetoothLeListener = callback;
     }
 
     //---------------------------------------------- Read / Write / Set Notification Functions --------------------------------------------------------------//
@@ -166,16 +165,14 @@ public class BluetoothLe {
      * @return the bluetooth gatt
      */
     public BluetoothGatt connect(BluetoothDevice device, boolean autoConnect) {
-        if (mBluetoothManager.equals(null)) {
+        if (mBluetoothManager==null) {
             mBluetoothLeListener.onError("BluetoothManager is null");
-            return null;
         }
-        if (device.equals(null)) {
+        if (device==null) {
             mBluetoothLeListener.onError("BluetoothDevice is null");
-            return null;
         }
         BluetoothGatt bluetoothGatt = bluetoothGattHashMap.get(device.getAddress());
-        if (!bluetoothGatt.equals(null)) {
+        if (bluetoothGatt!=null) {
             bluetoothGatt.disconnect();
             bluetoothGatt.close();
         }
@@ -217,23 +214,23 @@ public class BluetoothLe {
 
     public interface BluetoothLeListener {
         //Core methods.
-        public void onServicesDiscovered(BluetoothGatt gatt, int status);
+        void onServicesDiscovered(BluetoothGatt gatt, int status);
 
-        public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status);
+        void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status);
 
-        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState);
+        void onConnectionStateChange(BluetoothGatt gatt, int status, int newState);
 
-        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic);
+        void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic);
 
         //Read / Write Response method.
-        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status);
+        void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status);
 
-        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status);
+        void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status);
 
-        public void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status);
+        void onDescriptorRead(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status);
 
-        public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status);
+        void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status);
 
-        public void onError(String errorMessage);
+        void onError(String errorMessage);
     }
 }

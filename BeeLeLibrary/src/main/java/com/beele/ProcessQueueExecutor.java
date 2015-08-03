@@ -45,7 +45,7 @@ public class ProcessQueueExecutor extends Thread {
         processList.remove(readWriteCharacteristic);
     }
 
-    public void executeProecess() {
+    public void executeProcess() {
 
         if (!processList.isEmpty()) {
             ReadWriteCharacteristic readWriteCharacteristic = processList
@@ -111,7 +111,7 @@ public class ProcessQueueExecutor extends Thread {
         processQueueTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                executeProecess();
+                executeProcess();
             }
         }, 0, EXECUTE_DELAY);
     }
