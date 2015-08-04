@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.sample.beele.R;
+import com.sample.beele.model.ScannedDevice;
 
 import java.util.List;
 

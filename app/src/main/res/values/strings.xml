@@ -19,5 +19,9 @@
     <string name="menu_disconnect">Disconnect</string>
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
+    <string name="battery_status">Battery Status:</string>
+    <string name="button_status">Button Status:</string>
+    <string name="button_pressed">Button Pressed</string>
+    <string name="button_released">Button Released</string>
 
 </resources>

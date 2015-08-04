@@ -3,7 +3,7 @@
  * @copyright Copyright (C) 2014 VSNMobil. All rights reserved.
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-package com.sample.beele.adapter;
+package com.sample.beele.model;
 
 import android.bluetooth.BluetoothDevice;
 

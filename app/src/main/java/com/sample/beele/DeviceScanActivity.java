@@ -17,7 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.sample.beele.adapter.ScannedDevice;
+import com.sample.beele.model.ScannedDevice;
 import com.sample.beele.adapter.ScannedDeviceAdapter;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class DeviceScanActivity extends Activity {
 
 
-    private static final int REQUEST_ENABLE_BT = 1;
+    private static final int REQUEST_ENABLE_BT = 12;
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
     private boolean mScanning;
@@ -90,8 +90,8 @@ public class DeviceScanActivity extends Activity {
                 ScannedDevice item = scannedDeviceAdapter.getItem(position);
                 if (item != null) {
                     final Intent intent = new Intent(DeviceScanActivity.this, DeviceControlActivity.class);
-                    intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, item.getDisplayName());
-                    intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, item.getDeviceMac());
+                    intent.putExtra(AppConstant.EXTRAS_DEVICE_NAME, item.getDisplayName());
+                    intent.putExtra(AppConstant.EXTRAS_DEVICE_ADDRESS, item.getDeviceMac());
                     if (mScanning) {
                         mBluetoothAdapter.stopLeScan(mLeScanCallback);
                         mScanning = false;
@@ -106,7 +106,7 @@ public class DeviceScanActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_device_scan, menu);
         if (!mScanning) {
             menu.findItem(R.id.menu_stop).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(true);
