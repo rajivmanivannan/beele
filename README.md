@@ -1,10 +1,10 @@
 # BeeLe
 BeeLe is an Android Library project for Bluetooth Low Energy communication.We have addressed the simultaneous write charasteristic failure issue and added work around for it.
 
- /***************************************************************************************************
+ /**************
          * Used the Texas Instrument's CC2540 BLE Development kit for this demo
          * Refer the following link http://www.ti.com/tool/cc2540dk
-         ***************************************************************************************************/
+         **********/
 
 Note: Read the below description of Android's BluetoothGattCallback class Key methods for better understanding before use this library.
 
