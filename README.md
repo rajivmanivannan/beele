@@ -31,3 +31,8 @@ BLE device has few characteristics like
 2. READ - read Characteristics : To read the data from the BLE device we have call the corresponding READ characteristics.
 
 Refer the following link for more detail: https://developer.android.com/intl/ko/reference/android/bluetooth/BluetoothGattCallback.html
+
+Screenshots:
+https://github.com/RajivManivannan/BeeLe/blob/master/screenshots/device-2015-08-04-125434.png
+https://github.com/RajivManivannan/BeeLe/blob/master/screenshots/device-2015-08-04-123938.png
+
